@@ -1,0 +1,54 @@
+#	These are the RC attributes used at different design maturity levels.
+#	- means that that attribute will not be set, thus the default value will be used.
+#	Feel free to add additional attributes.
+#	The format is given below. To have the correct formatting, use 8 characters wide TAB's . See http://www.kernel.org/doc/Documentation/CodingStyle
+
+
+#TABLE HEADERS DESCRIPTION
+#rc_attribute				pyrite		bronze		silver		gold		diamond		comment
+information_level			9		9		9		9		9		-
+show_report_options			true		true		true		true		true		-
+detailed_sdc_messages			true		true		true		true		true		-
+group_generate_portname_from_netname	true		true		true		true		true		-
+lp_insert_clock_gating			-		true		true		true		true		-
+lp_insert_clock_gating_incremental	-		true		true		true		true		-
+write_vlog_bit_blast_constants		true		true		true		true		true		-
+information_level			9		9		9		9		9		-
+continue_on_error			true		-		-		-		-		-
+find_inefficient_use			true		true		true		-		-		-
+log_command_error			true		true		true		-		-		-
+report_tcl_command_error		true		true		true		-		-		-
+source_verbose				true		true		-		-		-		-
+source_verbose_proc			true		true		-		-		-		-
+source_verbose_info			-		false		-		-		-		-
+source_suspend_on_error			-		true		true		-		-		-
+hdl_report_case_info			true		true		true		-		-		-
+hdl_track_filename_row_col		true		true		true		-		-		-
+write_vlog_empty_module_for_black_box	true		true		-		-		-		-
+delete_unloaded_insts			false		false		-		-		-		-
+delete_unloaded_seqs			false		false		-		-		-		-
+hdl_preserve_unused_registers		true		true		-		-		-		-
+hdl_track_module_elab_memory_and_runtime true		-		true		true		-		-
+dp_postmap_downsize			-		-		true		true		true		-
+dp_postmap_upsize			-		-		true		true		true		-
+fail_on_error_mesg			-		-		-		true		true		-
+boundary_optimize_invert_hier_pins	-		-		-		true		true		-
+boundary_optimize_constant_hier_pins	false		-		-		-		-		-
+dp_rewriting				-		-		-		advanced	advanced	"LEC might fail. In that case use basic"
+hdl_error_on_blackbox			-		-		-		true		true		-
+hdl_error_on_logic_abstract		-		-		-		true		true		-
+hdl_unconnected_input_port_value	-		-		0		0 		0 		"do we need none(default) for all cases?"
+hdl_undriven_output_port_value		-		-		0		0		0		"do we need none(default) for all cases?"
+hdl_undriven_signal_value		-		-		0		0		0		"do we need none(default) for all cases?"
+iopt_enable_floating_output_check	true		true		true		true		true		-
+iopt_ultra_optimization			-		-		-		true		true		-
+optimize_constant_0_flops		false		false		-		-		-		-
+optimize_constant_1_flops		false		false		-		-		-		-
+optimize_constant_latches		false		false		-		-		-		-
+optimize_merge_flops			false		false		-		-		-		-
+optimize_merge_latches			false		false		-		-		-		-
+propagate_constant_from_timing_model	false		false		-		-		-		-
+tns_opto				-		-		true		true		true		-
+ultra_global_mapping			-		-		true		true		true		-
+dft_identify_internal_test_clocks	no_cgic_hier	no_cgic_hier	-		-		-		-
+dft_report_empty_test_clocks		true		true		true		true		true		-
