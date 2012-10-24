@@ -44,17 +44,17 @@ octopusRC::define_dft_test_signals \
 ################################################################################
 ## DfT no scan
 ################################################################################
-set_attribute dft_dont_scan true abl_dig_tapcn1 ;# TAP
-set_attribute dft_dont_scan true *_tcb ; # TCB's
-set_attribute dft_dont_scan true lkjh1 ; # The special BUMP module
+# set_attribute dft_dont_scan true abl_dig_tapcn1 ;# TAP
+# set_attribute dft_dont_scan true *_tcb ; # TCB's
+# set_attribute dft_dont_scan true lkjh1 ; # The special BUMP module
 
 
 ################################################################################
 ## Preserve unconnected scan inputs/outputs
 ################################################################################
 #Testmux si/so scan ports which will be connected at scan chains stitching stage
-set_attribute preserve true [find I0/u0_hrxc_ic_core_test/ -maxdepth 2 -pin si*]
-set_attribute preserve true [find I0/u0_hrxc_ic_core_test/ -maxdepth 2 -pin so*]
+# set_attribute preserve true [find I0/u0_hrxc_ic_core_test/ -maxdepth 2 -pin si*]
+# set_attribute preserve true [find I0/u0_hrxc_ic_core_test/ -maxdepth 2 -pin so*]
 # TPR's scan outputs. Same reason as below
 set_attribute preserve true [find / -pin tpr_sso]
 
