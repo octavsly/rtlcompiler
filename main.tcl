@@ -8,8 +8,9 @@ lappend auto_path $env(PROJECT_WORK)/data/blpjk_ic_lib/blpjk_ic/octopus/
 
 package require octopusRC 0.1
 package require octopus   0.1
-namespace import ::octopusRC::*
-namespace import ::octopus::*
+# Not importing functions due to potential conflict with RC
+#namespace import ::octopusRC::*
+#namespace import ::octopus::*
 #::octopus::set_octopus_color --disable
 
 regexp {(.*/data/)([^/]+_lib)/([^/]+)/.*} [exec pwd] EXEC_PATH DATA_PATH CRT_LIB CRT_CELL
