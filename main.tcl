@@ -111,14 +111,14 @@ include design_constraints.tcl
 
 # Specify the effort required for Generic Synthesis. It is recommended to
 # specify medium for Generic and non incremental synthesis for the first run
-::octopusRC::synthesize --type to_generic --design $DESSIGN --reports-path $_REPORTS_PATH
+::octopusRC::synthesize --type to_generic --design $DESIGN --reports-path $_REPORTS_PATH
 ################################################################################
 
 
 ################################################################################
 puts ">> Synthesizing to gates"
 ################################################################################
-::octopusRC::synthesize --type to_mapped --design $DESSIGN --reports-path $_REPORTS_PATH
+::octopusRC::synthesize --type to_mapped --design $DESIGN --reports-path $_REPORTS_PATH
 ################################################################################
 
 
@@ -138,7 +138,7 @@ include design_constraints_incremental.tcl
 
 delete_unloaded_undriven -all -force_bit_blast ${DESIGN}
 
-::octopusRC::synthesize --type to_mapped_incremental --design $DESSIGN --reports-path $_REPORTS_PATH
+::octopusRC::synthesize --type to_mapped_incremental --design $DESIGN --reports-path $_REPORTS_PATH
 
 
 # Due to remove_assigns we might have crossing from DfT to AO like the signal going from
