@@ -1,6 +1,6 @@
 #!/bin/sh
 # the next line restarts using -*-Tcl-*-sh \
-exec rc -64 -logfile rc.log -cmdfile rc.cmd -overwrite -f "$0" -execute "set argv ${1+\"$@\"}; set argv0 $0"
+exec rc -64 -logfile rc.log -cmdfile rc.cmd -overwrite -f "$0" -execute "set argv \"\" ; set argv ${1+\"$@\"} ; set argv0 $0"
 
 #This is the main RC script. It will source other files
 
@@ -21,6 +21,8 @@ set var_array(40,_CPF_FILE)		[list "--cpf" "${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/
 set var_array(90,run-speed)		[list "--run-speed" "slow" "string" "1" "1" "slow fast" "If set to fast a lot of reports will be skipped"]
 
 ::octopus::extract_check_options_data
+
+::octopus::abort_on error --display-help
 
 ::octopusRC::set_design_maturity_level\
 	--maturity-level ${maturity-level} \
@@ -83,14 +85,14 @@ puts "\n>> Read CPF in, thus power information, modes and constraints"
 set design_modes [find /designs/${DESIGN}/ -vname -mode *]
 puts "Created modes :    ${design_modes}"
 
-display_message warning "Rumours say that displaying \$::dc::sdc_failed_commands might be wrong"
+::octopus::display_message warning "Rumours say that displaying \$::dc::sdc_failed_commands might be wrong"
 puts $::dc::sdc_failed_commands
 
 foreach current_design_mode ${design_modes} {
 	puts "Report timing for design mode: $current_design_mode"
 	# Some modes are not found. Until we understand what is happening catch the error so RC continues
 	if { [ catch {report timing -lint -mode [file tail $current_design_mode] >  ${_REPORTS_PATH}/${DESIGN}_${current_design_mode}_premap_timing.rpt} ] } {
-		display_message error "Failed to generate report timing for $current_design_mode"
+		::octopus::display_message error "Failed to generate report timing for $current_design_mode"
 	}
 }
 ################################################################################
@@ -153,7 +155,7 @@ report isolation -hier -detail > $_REPORTS_PATH/${DESIGN}_isolation_after_scan_i
 
 ::octopusRC::write --current-state scn
 
-report_attributes  \
+::octopusRC::report_attributes  \
 	--attributes power_domain \
 	--objects [find / -instance *] \
 	> ./rpt/${DESIGN}_instances_power_domains.rpt
@@ -175,15 +177,15 @@ puts "============================"
 
 
 ################################################################################
-summary_of_messages error warning fixme workaround
+::octopus::summary_of_messages error warning fixme workaround
 
 if { ! [info exists env(RC_ESD_CONTINUE)] || "$env(RC_ESD_CONTINUE)" != "true" } {
-	display_message info "RC suspended"
-	display_message none "    by typing resume you will DELETE ALL DIGITAL, leaving only analog cells"
-	display_message none "    this is done to generate the netlist used for 'ESD' simulations"
-	display_message none ""
-	display_message tip "If you never want to stop here, then set the environmental variable RC_ESD_CONTINUE to true"
-	display_message none "  export RC_ESD_CONTINUE=true"
+	::octopus::display_message info "RC suspended"
+	::octopus::display_message none "    by typing resume you will DELETE ALL DIGITAL, leaving only analog cells"
+	::octopus::display_message none "    this is done to generate the netlist used for 'ESD' simulations"
+	::octopus::display_message none ""
+	::octopus::display_message tip "If you never want to stop here, then set the environmental variable RC_ESD_CONTINUE to true"
+	::octopus::display_message none "  export RC_ESD_CONTINUE=true"
 	flush stdout ; # write all log until now on disk
 	suspend
 }
@@ -191,7 +193,7 @@ if { ! [info exists env(RC_ESD_CONTINUE)] || "$env(RC_ESD_CONTINUE)" != "true" }
 
 
 ################################################################################
-display_message info "Generating ESD netlist"
+::octopus::display_message info "Generating ESD netlist"
 ################################################################################
 set_attribute ui_respects_preserve false /
 rm dft/*/*
@@ -201,7 +203,7 @@ include define_analog_instances.tcl
 foreach avoided_analog_inst $AO_analog_inst_all {
 	puts "Not regrouped: ${avoided_analog_inst}"
 }
-advanced_recursive_grouping \
+::octopusRC::advanced_recursive_grouping \
 	--group-children-of-instances  [find / -instance -maxdepth  4 *] \
 	--exclude-parents-of-instances $AO_analog_inst_all \
 	--debug-level 2
@@ -210,5 +212,5 @@ cd /
 rm [find / -instance *new_Inst_group_sw_domain_*]
 
 write_hdl >  ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST/${DESIGN}_netlist_ESD_sim.v
-display_message info "As requested, all digital logic has just been deleted"
+::octopus::display_message info "As requested, all digital logic has just been deleted"
 ################################################################################
