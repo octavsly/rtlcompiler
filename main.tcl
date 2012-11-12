@@ -66,7 +66,7 @@ include ple_setup.cmd
 ################################################################################
 puts "\n>>  Read, Elaborate and Check the Design"
 ################################################################################
-::octopusRC::read_hdl --file ../../nccoex/cmd/file_set.tcl --type utel
+source ./read_hdl.tcl
 ::octopusRC::elaborate --design $DESIGN --reports-path $_REPORTS_PATH
 ################################################################################
 
@@ -139,7 +139,7 @@ puts ">> Incremental Synthesis"
 ################################################################################
 include design_constraints_incremental.tcl
 
-delete_unloaded_undriven -all -force_bit_blast ${DESIGN}
+::octopusRC::delete_unloaded_undriven -all -force_bit_blast ${DESIGN}
 
 ::octopusRC::synthesize --type to_mapped_incremental --design $DESIGN --reports-path $_REPORTS_PATH
 
