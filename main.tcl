@@ -1,6 +1,6 @@
 #!/bin/sh
 # the next line restarts using -*-Tcl-*-sh \
-exec rc -64 -logfile rc.log -cmdfile rc.cmd -overwrite -f "$0" -execute "set argv \"\" ; set argv ${1+\"$@\"} ; set argv0 $0"
+exec rc -64 -logfile rc.log -cmdfile rc.cmd -overwrite -f "$0" -execute "set argv \"\" ; set argv ${1+\"$@\"} ; set prog_name $0"
 
 #This is the main RC script. It will source other files
 
@@ -19,6 +19,8 @@ set var_array(20,DESIGN)		[list "--design" "$CRT_CELL" "string" "1" "1" "" "Top 
 set var_array(30,_REPORTS_PATH)		[list "--reports-path" "${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/rtlcompiler/rpt" "string" "1" "1" "" "Directory holding the reports."]
 set var_array(40,_CPF_FILE)		[list "--cpf" "${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/POWER/${CRT_CELL}.cpf" "string" "1" "1" "" "CPF file location."]
 set var_array(90,run-speed)		[list "--run-speed" "slow" "string" "1" "1" "slow fast" "If set to fast a lot of reports will be skipped"]
+
+set ::octopus::prog_name $prog_name
 
 ::octopus::extract_check_options_data
 
@@ -66,15 +68,24 @@ include ple_setup.cmd
 ################################################################################
 puts "\n>>  Read, Elaborate and Check the Design"
 ################################################################################
-source ./read_hdl.tcl
+include read_hdl.tcl 
+
 ::octopusRC::elaborate --design $DESIGN --reports-path $_REPORTS_PATH
 ################################################################################
 
 ################################################################################
 puts "\n>>  Generate set_case_analysis statements from TCB test data files"
 ################################################################################
-::octopusRC::set_case_analysis --tcb-td-file <TCB's test data file> --mode application --constraint-file ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/CONSTRAINTS/${DESIGN}_func_set_case_analysis.sdc
-::octopusRC::set_case_analysis --tcb-td-file <TCB's test data file> --mode intest_logic_scan_stuckat --constraint-file ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/CONSTRAINTS/${DESIGN}_scan_set_case_analysis.sdc
+::octopusRC::set_case_analysis \
+	--tcb-td-file <TCB's test data file> \
+	--mode application \
+	--skip-signal tcb_capture \
+	--constraint-file ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/CONSTRAINTS/${DESIGN}_func_set_case_analysis.sdc
+::octopusRC::set_case_analysis \
+	--tcb-td-file <TCB's test data file> \
+	--mode intest_logic_scan_stuckat \
+	--skip-signal tcb_capture \
+	--constraint-file ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/CONSTRAINTS/${DESIGN}_scan_set_case_analysis.sdc
 ################################################################################
 
 ################################################################################
@@ -130,7 +141,7 @@ puts ">> Connect scan chains"
 ################################################################################
 include connect_scan_chains.tcl
 
-::octopusRC::write --current-state mapped_scn
+::octopusRC::write --current-state mapped_scn --path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
 ################################################################################
 
 
@@ -153,7 +164,7 @@ commit_cpf
 #verify_power_structure
 report isolation -hier -detail > $_REPORTS_PATH/${DESIGN}_isolation_after_scan_insertion.rpt
 
-::octopusRC::write --current-state scn
+::octopusRC::write --current-state scn --path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
 
 ::octopusRC::report_attributes  \
 	--attributes power_domain \
@@ -162,7 +173,8 @@ report isolation -hier -detail > $_REPORTS_PATH/${DESIGN}_isolation_after_scan_i
 
 write_sdf -delimiter "." -edges check_edge > generated/${DESIGN}_netlist_scn.sdf
 
-::octopusRC::generate_list_of_clock_inverters_for_dft_shell > generated/dftshell_inverters_list.tcl
+# Not necessary since dft_shell 9.5 can deal with neg-edge FF's
+#::octopusRC::generate_list_of_clock_inverters_for_dft_shell > generated/dftshell_inverters_list.tcl
 
 puts "Final Runtime & Memory."
 timestat FINAL
