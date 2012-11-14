@@ -125,7 +125,7 @@ include design_constraints.tcl
 
 # Specify the effort required for Generic Synthesis. It is recommended to
 # specify medium for Generic and non incremental synthesis for the first run
-::octopusRC::synthesize --type to_generic --design $DESIGN --reports-path $_REPORTS_PATH
+::octopusRC::synthesize --type to_generic --design $DESIGN --reports-path $_REPORTS_PATH --netlist-path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
 ################################################################################
 
 
@@ -141,7 +141,7 @@ puts ">> Connect scan chains"
 ################################################################################
 include connect_scan_chains.tcl
 
-::octopusRC::write --current-state mapped_scn --path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
+::octopusRC::write --current-state mapped_scn --netlist-path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
 ################################################################################
 
 
@@ -150,9 +150,9 @@ puts ">> Incremental Synthesis"
 ################################################################################
 include design_constraints_incremental.tcl
 
-::octopusRC::delete_unloaded_undriven -all -force_bit_blast ${DESIGN}
+::octopusRC::delete_unloaded_undriven 
 
-::octopusRC::synthesize --type to_mapped_incremental --design $DESIGN --reports-path $_REPORTS_PATH
+::octopusRC::synthesize --type to_mapped_incremental --design $DESIGN --reports-path $_REPORTS_PATH --netlist-path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
 
 
 # Due to remove_assigns we might have crossing from DfT to AO like the signal going from
@@ -164,7 +164,7 @@ commit_cpf
 #verify_power_structure
 report isolation -hier -detail > $_REPORTS_PATH/${DESIGN}_isolation_after_scan_insertion.rpt
 
-::octopusRC::write --current-state scn --path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
+::octopusRC::write --current-state scn --netlist-path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
 
 ::octopusRC::report_attributes  \
 	--attributes power_domain \
