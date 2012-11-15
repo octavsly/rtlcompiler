@@ -132,7 +132,7 @@ include design_constraints.tcl
 ################################################################################
 puts ">> Synthesizing to gates"
 ################################################################################
-::octopusRC::synthesize --type to_mapped --design $DESIGN --reports-path $_REPORTS_PATH
+::octopusRC::synthesize --type to_mapped --design $DESIGN --reports-path $_REPORTS_PATH --netlist-path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
 ################################################################################
 
 
