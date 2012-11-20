@@ -19,7 +19,7 @@ set_compatible_test_clocks -all
 # }
 #
 # # Define floating segment with falling edge FF's. They will be put in front of the chain.
-# define_dft floating_segment \
+# eval define_dft floating_segment \
 # 	-name falling_edge_flops \
 # 	"$ff_fall_edge_no_dft_part_of_segment $sg_fall_edge"
 #

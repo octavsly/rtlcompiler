@@ -66,5 +66,7 @@ check_dft_rules 		> $_REPORTS_PATH/${DESIGN}_check_dft_rules.rpt
 report dft_setup		> $_REPORTS_PATH/${DESIGN}_report_dft_setup.rpt
 report dft_registers -dont_scan	> $_REPORTS_PATH/${DESIGN}_report_dft_dont_scan.rpt
 
-write_db ${DESIGN} -all_root_attributes -to_file ${DESIGN}_post_dft_settings.db
+
+shell mkdir -p db
+write_db ${DESIGN} -all_root_attributes -to_file db/${DESIGN}_post_dft_settings.db
 }
