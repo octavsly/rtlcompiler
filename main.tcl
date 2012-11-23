@@ -70,7 +70,7 @@ puts "\n>>  Read, Elaborate and Check the Design"
 ################################################################################
 include read_hdl.tcl 
 
-::octopusRC::elaborate --design $DESIGN --reports-path $_REPORTS_PATH
+::octopusRC::elaborate
 ################################################################################
 
 ################################################################################
@@ -91,7 +91,7 @@ puts "\n>>  Generate set_case_analysis statements from TCB test data files"
 ################################################################################
 puts "\n>> Read CPF in, thus power information, modes and constraints"
 ################################################################################
-::octopusRC::read_cpf --design $DESIGN --reports-path $_REPORTS_PATH --cpf $_CPF_FILE
+::octopusRC::read_cpf --cpf $_CPF_FILE
 
 set design_modes [find /designs/${DESIGN}/ -vname -mode *]
 puts "Created modes :    ${design_modes}"
@@ -125,14 +125,14 @@ include design_constraints.tcl
 
 # Specify the effort required for Generic Synthesis. It is recommended to
 # specify medium for Generic and non incremental synthesis for the first run
-::octopusRC::synthesize --type to_generic --design $DESIGN --reports-path $_REPORTS_PATH --netlist-path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
+::octopusRC::synthesize --type to_generic --netlist-path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
 ################################################################################
 
 
 ################################################################################
 puts ">> Synthesizing to gates"
 ################################################################################
-::octopusRC::synthesize --type to_mapped --design $DESIGN --reports-path $_REPORTS_PATH --netlist-path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
+::octopusRC::synthesize --type to_mapped --netlist-path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
 ################################################################################
 
 
@@ -152,7 +152,7 @@ include design_constraints_incremental.tcl
 
 ::octopusRC::delete_unloaded_undriven 
 
-::octopusRC::synthesize --type to_mapped_incremental --design $DESIGN --reports-path $_REPORTS_PATH --netlist-path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
+::octopusRC::synthesize --type to_mapped_incremental --netlist-path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
 
 
 # Due to remove_assigns we might have crossing from DfT to AO like the signal going from
