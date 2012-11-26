@@ -10,15 +10,20 @@ set_attribute dft_mix_clock_edges_in_scan_chains 	true 		$DESIGN
 ################################################################################
 ::octopusRC::define_dft_test_clocks \
 	--timing-modes "<shiftscan>"\
-	--debug-level 0
+	--debug-level 1
 
 
 ################################################################################
 ## Defines test modes
 ################################################################################
 # Shift enables
-define_dft shift_enable -name se -default		-active high <se>
-define_dft shift_enable -name tcb_clock_active_se	-active high <tcb_clock_active_se>
+# Required for scan-enable connection of the scannable flip-flops.
+define_dft shift_enable -name se -default               -active high <se>
+# Required for clock-gating connection of the TE signal
+define_dft shift_enable -name tcb_clock_active_se      -active high <tcb_clock_active_se>
+
+# Might be required for clock tracing. It solve all the other S type of TCB's signals.
+define_dft shift_enable -name tcb_tc                    -active high <TAP CORE>/tcb_tc
 
 # Take DfT signals from SDC files
 octopusRC::define_dft_test_signals \
@@ -35,8 +40,7 @@ octopusRC::define_dft_test_signals \
 ::octopusRC::read_dft_abstract_model\
 	--assume-connected-shift-enable\
 	--ctl \
-		<TPR's>\
-		<other ctl files> \
+		<ctl files> \
 	--boundary-opto \
 	--debug-level 2
 
@@ -55,16 +59,14 @@ octopusRC::define_dft_test_signals \
 #Testmux si/so scan ports which will be connected at scan chains stitching stage
 # set_attribute preserve true [find I0/u0_hrxc_ic_core_test/ -maxdepth 2 -pin si*]
 # set_attribute preserve true [find I0/u0_hrxc_ic_core_test/ -maxdepth 2 -pin so*]
-# TPR's scan outputs. Same reason as below
-set_attribute preserve true [find / -pin tpr_sso]
 
 ################################################################################
 ## clock gating settings
 ################################################################################
 if { "$::octopusRC::run_speed" != "fast"} {
-check_dft_rules 		> $_REPORTS_PATH/${DESIGN}_check_dft_rules.rpt
-report dft_setup		> $_REPORTS_PATH/${DESIGN}_report_dft_setup.rpt
-report dft_registers -dont_scan	> $_REPORTS_PATH/${DESIGN}_report_dft_dont_scan.rpt
+check_dft_rules 		> ${_REPORTS_PATH}/${DESIGN}_check_dft_rules.rpt
+report dft_setup		> ${_REPORTS_PATH}/${DESIGN}_report_dft_setup.rpt
+report dft_registers -dont_scan	> ${_REPORTS_PATH}/${DESIGN}_report_dft_dont_scan.rpt
 
 
 shell mkdir -p db
