@@ -18,6 +18,7 @@ set var_array(10,maturity-level)	[list "--maturity-level" "<none>" "string" "1" 
 set var_array(20,DESIGN)		[list "--design" "$CRT_CELL" "string" "1" "1" "" "Top level design for which synthesis will be performed."]
 set var_array(30,_REPORTS_PATH)		[list "--reports-path" "${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/rtlcompiler/rpt" "string" "1" "1" "" "Directory holding the reports."]
 set var_array(40,_CPF_FILE)		[list "--cpf" "${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/POWER/${CRT_CELL}.cpf" "string" "1" "1" "" "CPF file location."]
+set var_array(50,clean-rpt)		[list "--clean-rpt" "false" "boolean" "" "" "" "Clean all reports before the run."]
 set var_array(90,run-speed)		[list "--run-speed" "slow" "string" "1" "1" "slow fast" "If set to fast a lot of reports will be skipped"]
 
 set ::octopus::prog_name $prog_name
@@ -26,31 +27,17 @@ set ::octopus::prog_name $prog_name
 
 ::octopus::abort_on error --display-help
 
-::octopusRC::set_design_maturity_level\
-	--maturity-level ${maturity-level} \
-	--rc-attributes-file rc_attributes.txt
-
-set_attribute super_thread_batch_command		{bsub -o /dev/null -J RC_server}
-set_attribute super_thread_kill_command 		{bkill}
-shell mkdir -p /home/scratch/$env(USER)
-set_attribute super_thread_cache			/home/scratch/$env(USER)
-set_attribute super_thread_servers 			{localhost localhost localhost localhost}
 ################################################################################
-puts "\n>> General settings"
+puts "\n>> Attributes"
 ################################################################################
-# These are varibles which are used in more than one place
-# Thus it makes sense to define them here
+include rc_attributes.tcl
+################################################################################
 
-# Specify location to dump reports generated
-shell mkdir -p $_REPORTS_PATH
 
-# Specify location to dump outputs generated
-shell mkdir -p ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
-
-set ::octopusRC::run_speed "${run-speed}"
-
-# This is useful for creating test cases, to be sent to cadence
-applet load create_tcase
+################################################################################
+puts "\n>> House keeping"
+################################################################################
+include house_keeping.tcl
 ################################################################################
 
 
@@ -59,9 +46,9 @@ puts "\n>>  Library (including dont_use) and ple setup"
 ################################################################################
 read_cpf -library $_CPF_FILE
 
-include dont_use_list.cmd
+include dont_use_list.tcl
 
-include ple_setup.cmd
+include ple_setup.tcl
 ################################################################################
 
 
@@ -164,12 +151,12 @@ commit_cpf
 #verify_power_structure
 report isolation -hier -detail > $_REPORTS_PATH/${DESIGN}_isolation_after_scan_insertion.rpt
 
-::octopusRC::write --current-state scn --netlist-path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
+::octopusRC::write --current-state scn --netlist-path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST --change-names
 
 ::octopusRC::report_attributes  \
 	--attributes power_domain \
 	--objects [find / -instance *] \
-	> ./rpt/${DESIGN}_instances_power_domains.rpt
+	> ${_REPORTS_PATH}/${DESIGN}_instances_power_domains.rpt
 
 write_sdf -delimiter "." -edges check_edge > generated/${DESIGN}_netlist_scn.sdf
 
