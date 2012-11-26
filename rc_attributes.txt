@@ -24,7 +24,12 @@ source_verbose_info			-		false		-		-		-		-
 source_suspend_on_error			-		true		true		-		-		-
 hdl_report_case_info			true		true		true		-		-		-
 hdl_track_filename_row_col		true		true		true		-		-		-
-write_vlog_empty_module_for_black_box	true		true		-		-		-		-
+hdl_array_naming_style			%s_%d_		%s_%d_		%s_%d_		%s_%d_		%s_%d_		%s_%d_
+hdl_instance_array_naming_style		%s_%d_		%s_%d_		%s_%d_		%s_%d_		%s_%d_		%s_%d_
+hdl_record_naming_style			%s_%s_		%s_%s_		%s_%s_		%s_%s_		%s_%s_		%s_%s_
+hdl_generate_index_style		%s_%d_		%s_%d_		%s_%d_		%s_%d_		%s_%d_		%s_%d_
+hdl_generate_separator			__		__		__		__		__		__
+#write_vlog_empty_module_for_black_box	true		true		-		-		-		-
 delete_unloaded_insts			false		false		-		-		-		-
 delete_unloaded_seqs			false		false		-		-		-		-
 hdl_preserve_unused_registers		true		true		-		-		-		-
