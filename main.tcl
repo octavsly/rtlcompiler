@@ -138,7 +138,7 @@ commit_cpf
 #verify_power_structure
 report isolation -hier -detail > $_REPORTS_PATH/${DESIGN}_isolation_after_scan_insertion.rpt
 
-::octopusRC::write --stage scn 
+::octopusRC::write --stage scn --change-names
 
 ::octopusRC::report_attributes  \
 	--attributes power_domain \
