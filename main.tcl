@@ -80,20 +80,6 @@ puts "\n>>  Generate set_case_analysis statements from TCB test data files"
 puts "\n>> Read CPF in, thus power information, modes and constraints"
 ################################################################################
 ::octopusRC::read_cpf --cpf $_CPF_FILE
-
-set design_modes [find /designs/${DESIGN}/ -vname -mode *]
-puts "Created modes :    ${design_modes}"
-
-::octopus::display_message warning "Rumours say that displaying \$::dc::sdc_failed_commands might be wrong"
-puts $::dc::sdc_failed_commands
-
-foreach current_design_mode ${design_modes} {
-	puts "Report timing for design mode: $current_design_mode"
-	# Some modes are not found. Until we understand what is happening catch the error so RC continues
-	if { [ catch {report timing -lint -mode [file tail $current_design_mode] >  ${_REPORTS_PATH}/${DESIGN}_${current_design_mode}_premap_timing.rpt} ] } {
-		::octopus::display_message error "Failed to generate report timing for $current_design_mode"
-	}
-}
 ################################################################################
 
 
@@ -169,10 +155,6 @@ timestat FINAL
 puts "============================"
 puts "Synthesis Finished ........."
 puts "============================"
-
-### report power -mode PM_dft_Off_MTP_Off_sleep   > ./rpt/power_sleep.rpt
-### report power -mode PM_dft_Off_MTP_Off_standby > ./rpt/power_standby.rpt
-### report power -mode PM_dft_Off_MTP_Off_normal  > ./rpt/power_normal.rpt
 ################################################################################
 
 
