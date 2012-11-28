@@ -17,8 +17,9 @@ regexp {(.*/data/)([^/]+_lib)/([^/]+)/.*} [exec pwd] EXEC_PATH DATA_PATH CRT_LIB
 set var_array(10,maturity-level)	[list "--maturity-level" "<none>" "string" "1" "1" "pyrite bronze silver gold diamond" "Maturity level of the design."]
 set var_array(20,DESIGN)		[list "--design" "$CRT_CELL" "string" "1" "1" "" "Top level design for which synthesis will be performed."]
 set var_array(30,_REPORTS_PATH)		[list "--reports-path" "${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/rtlcompiler/rpt" "string" "1" "1" "" "Directory holding the reports."]
-set var_array(40,_CPF_FILE)		[list "--cpf" "${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/POWER/${CRT_CELL}.cpf" "string" "1" "1" "" "CPF file location."]
-set var_array(50,clean-rpt)		[list "--clean-rpt" "false" "boolean" "" "" "" "Clean all reports before the run."]
+set var_array(40,_NETLIST_PATH)		[list "--netlist-path" "${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST" "string" "1" "1" "" "Directory holding the reports."]
+set var_array(50,_CPF_FILE)		[list "--cpf" "${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/POWER/${CRT_CELL}.cpf" "string" "1" "1" "" "CPF file location."]
+set var_array(60,clean-rpt)		[list "--clean-rpt" "false" "boolean" "" "" "" "Clean all reports before the run."]
 set var_array(90,run-speed)		[list "--run-speed" "slow" "string" "1" "1" "slow fast" "If set to fast a lot of reports will be skipped"]
 
 set ::octopus::prog_name $prog_name
@@ -112,14 +113,14 @@ include design_constraints.tcl
 
 # Specify the effort required for Generic Synthesis. It is recommended to
 # specify medium for Generic and non incremental synthesis for the first run
-::octopusRC::synthesize --type to_generic --netlist-path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
+::octopusRC::synthesize --type to_generic 
 ################################################################################
 
 
 ################################################################################
 puts ">> Synthesizing to gates"
 ################################################################################
-::octopusRC::synthesize --type to_mapped --netlist-path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
+::octopusRC::synthesize --type to_mapped 
 ################################################################################
 
 
@@ -128,7 +129,7 @@ puts ">> Connect scan chains"
 ################################################################################
 include connect_scan_chains.tcl
 
-::octopusRC::write --current-state mapped_scn --netlist-path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
+::octopusRC::write --stage mapped_scn 
 ################################################################################
 
 
@@ -139,7 +140,7 @@ include design_constraints_incremental.tcl
 
 ::octopusRC::delete_unloaded_undriven 
 
-::octopusRC::synthesize --type to_mapped_incremental --netlist-path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST
+::octopusRC::synthesize --type to_mapped_incremental 
 
 
 # Due to remove_assigns we might have crossing from DfT to AO like the signal going from
@@ -151,7 +152,7 @@ commit_cpf
 #verify_power_structure
 report isolation -hier -detail > $_REPORTS_PATH/${DESIGN}_isolation_after_scan_insertion.rpt
 
-::octopusRC::write --current-state scn --netlist-path ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST --change-names
+::octopusRC::write --stage scn 
 
 ::octopusRC::report_attributes  \
 	--attributes power_domain \
