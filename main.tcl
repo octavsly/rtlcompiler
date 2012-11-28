@@ -1,6 +1,6 @@
 #!/bin/sh
 # the next line restarts using -*-Tcl-*-sh \
-exec rc -64 -logfile rc.log -cmdfile rc.cmd -overwrite -f "$0" -execute "set argv \"\" ; set argv ${1+\"$@\"} ; set prog_name $0"
+exec rc -64 -logfile rc.log -cmdfile rc.cmd -overwrite -f "$0" -execute "set argv \"\" ; set argv ${1+\"$@\"} ; set prog_name $0; set_attribute source_verbose true; set_attribute source_verbose_proc true ; set_attribute source_verbose_info true"
 
 #This is the main RC script. It will source other files
 
