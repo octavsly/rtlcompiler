@@ -74,6 +74,7 @@ puts "\n>>  Generate set_case_analysis statements from TCB test data files"
 	--mode intest_logic_scan_stuckat \
 	--skip-signal tcb_capture \
 	--constraint-file ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/CONSTRAINTS/${DESIGN}_scan_set_case_analysis.sdc
+::octopus::abort_on error --suspend
 ################################################################################
 
 ################################################################################
