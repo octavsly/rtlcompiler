@@ -9,8 +9,7 @@ set_attribute dft_mix_clock_edges_in_scan_chains 	true 		$DESIGN
 #Define clocks
 ################################################################################
 ::octopusRC::define_dft_test_clocks \
-	--timing-modes "<shiftscan>"\
-	--debug-level 1
+	--timing-modes "<shiftscan>"
 
 
 ################################################################################
@@ -41,25 +40,21 @@ octopusRC::define_dft_test_signals \
 	--assume-connected-shift-enable\
 	--ctl \
 		<ctl files> \
-	--boundary-opto \
-	--debug-level 2
-
+	--boundary-opto 
 
 ################################################################################
 ## DfT no scan
 ################################################################################
-# set_attribute dft_dont_scan true abl_dig_tapcn1 ;# TAP
-# set_attribute dft_dont_scan true *_tcb ; # TCB's
-# set_attribute dft_dont_scan true lkjh1 ; # The special BUMP module
-
+# set_attribute dft_dont_scan true <TAP> ;# TAP
 
 ################################################################################
 ## Preserve unconnected scan inputs/outputs
 ################################################################################
 #Testmux si/so scan ports which will be connected at scan chains stitching stage
-# set_attribute preserve true [find I0/u0_hrxc_ic_core_test/ -maxdepth 2 -pin si*]
-# set_attribute preserve true [find I0/u0_hrxc_ic_core_test/ -maxdepth 2 -pin so*]
+# set_attribute preserve true [find <instance> -maxdepth 2 -pin si*]
+# set_attribute preserve true [find <instance> -maxdepth 2 -pin so*]
 
+::octopus::abort_on error --suspend
 ################################################################################
 ## clock gating settings
 ################################################################################

@@ -64,16 +64,17 @@ include read_hdl.tcl
 ################################################################################
 puts "\n>>  Generate set_case_analysis statements from TCB test data files"
 ################################################################################
-::octopusRC::set_case_analysis \
+::octopusRC::constraints_from_tcbs \
 	--tcb-td-file <TCB's test data file> \
 	--mode application \
-	--skip-signal tcb_capture \
-	--constraint-file ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/CONSTRAINTS/${DESIGN}_func_set_case_analysis.sdc
-::octopusRC::set_case_analysis \
+	--exclude-ports tcb_capture \
+	--constraint-file ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/CONSTRAINTS/${DESIGN}_func_tcb_settings.sdc
+::octopusRC::constraints_from_tcbs \
 	--tcb-td-file <TCB's test data file> \
 	--mode intest_logic_scan_stuckat \
-	--skip-signal tcb_capture \
-	--constraint-file ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/CONSTRAINTS/${DESIGN}_scan_set_case_analysis.sdc
+	--exclude-ports tcb_capture \
+	--ports <consider only few TCB ports>
+	--constraint-file ${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/CONSTRAINTS/${DESIGN}_scan_tcb_settings.sdc
 ::octopus::abort_on error --suspend
 ################################################################################
 
