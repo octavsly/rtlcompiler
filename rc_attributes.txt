@@ -57,3 +57,4 @@ tns_opto				-		-		true		true		true		-
 ultra_global_mapping			-		-		true		true		true		-
 dft_identify_internal_test_clocks	no_cgic_hier	no_cgic_hier	-		-		-		-
 dft_report_empty_test_clocks		true		true		true		true		true		-
+dft_shift_register_identification_mode	logical_only	logical_only	logical_only	logical_only	logical_only	"Other options are a bit more dangerous"
