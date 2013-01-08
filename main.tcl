@@ -4,7 +4,13 @@ exec rc -64 -logfile rc.log -cmdfile rc.cmd -overwrite -f "$0" -execute "set arg
 
 #This is the main RC script. It will source other files
 
-lappend auto_path $env(PROJECT_WORK)/data/blpjk_ic_lib/blpjk_ic/octopus/
+if { [info exists env(OCTOPUS_INSTALL_PATH) ] } {
+        lappend auto_path $env(OCTOPUS_INSTALL_PATH)
+} else {
+        puts "ERROR: Please set environmental variable OCTOPUS_INSTALL_PATH to point to the location of octopus.tcl file"
+        exit 1
+}
+
 
 package require octopusRC 0.1
 package require octopus   0.1
@@ -13,7 +19,7 @@ package require octopus   0.1
 #namespace import ::octopus::*
 #::octopus::set_octopus_color --disable
 
-regexp {(.*/data/)([^/]+_lib)/([^/]+)/.*} [exec pwd] EXEC_PATH DATA_PATH CRT_LIB CRT_CELL
+set EXEC_PATH "" ; set DATA_PATH "" ; set CRT_LIB "" ; set CRT_CELL "" ; regexp {(.*/data/)([^/]+_lib)/([^/]+)/.*} [exec pwd] EXEC_PATH DATA_PATH CRT_LIB CRT_CELL
 set var_array(10,maturity-level)	[list "--maturity-level" "<none>" "string" "1" "1" "pyrite bronze silver gold diamond" "Maturity level of the design."]
 set var_array(20,DESIGN)		[list "--design" "$CRT_CELL" "string" "1" "1" "" "Top level design for which synthesis will be performed."]
 set var_array(30,_REPORTS_PATH)		[list "--reports-path" "${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/rtlcompiler/rpt" "string" "1" "1" "" "Directory holding the reports."]
