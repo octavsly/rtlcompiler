@@ -47,6 +47,7 @@ hdl_undriven_output_port_value		-		-		0		0		0		"do we need none(default) for all
 hdl_undriven_signal_value		-		-		0		0		0		"do we need none(default) for all cases?"
 iopt_enable_floating_output_check	true		true		true		true		true		-
 iopt_ultra_optimization			-		-		-		true		true		-
+glo_redrem_ultra_effort			-		-		true		true		true		"hidden switch which explodes the runtime but removes most of the redundancy in the design."
 optimize_constant_0_flops		false		false		-		-		-		-
 optimize_constant_1_flops		false		false		-		-		-		-
 optimize_constant_latches		false		false		-		-		-		-
