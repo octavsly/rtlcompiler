@@ -9,6 +9,8 @@ check_dft_rules
 # make all test clocks compatible
 set_compatible_test_clocks -all
 
+::octopusRC::write --stage mapped_scn
+
 # Find all falling edge FF, or segments clocked on falling edge
 # set ff_fall_edge_no_dft_part_of_segment [filter -invert dft_part_of_segment "*" [filter dft_test_clock_edge "fall" [filter flop "true" [find / -inst *]] ] ]
 # set ff_fall_edge____dft_part_of_segment [filter         dft_part_of_segment "*" [filter dft_test_clock_edge "fall" [filter flop "true" [find / -inst *]] ] ]

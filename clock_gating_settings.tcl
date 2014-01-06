@@ -1,5 +1,5 @@
 ################################################################################
-## clock gating settings
+# clock gating settings
 ################################################################################
 # It will only use clock gating cells with observation capability for FC increase.
 set_attribute lp_clock_gating_add_obs_port true ${DESIGN}
