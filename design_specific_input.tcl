@@ -73,18 +73,18 @@ set TCBs(module) "" ; # will be found automatically after elaborate
 set TPRs(module) "" ; # will be found automatically after elaborate
 
 set TCBs(td)	"
-		./hrxc_ic_lib/hrxc_ic_rcgu/catviews/hrxc_ic_rcgu_tcbreg.td \
-		./hrxc_ic_lib/hrxc_ic_core/catviews/hrxc_ic_core_test_off_tcbreg.td \
-		./hrxc_ic_lib/hrxc_ic_core/catviews/hrxc_ic_core_test_on_tcbreg.td \
-		./iphgrf_aseifbfn1_lib/iphgrf_aseifbfn1/catviews/iphgrf_aseifbfn1_tcbreg.td \
-		./iphgrf_asdafevsdd1_lib/iphgrf_asdafevsdd1/catviews/iphgrf_asdafevsdd1_tcbreg.td \
-		./iphgrf_hrxc4_lib/iphgrf_hrxc4/catviews/iphgrf_hrxc4_tcbreg.td \
-		./iphgrf_asdfuirfv1_lib/iphgrf_lfcnwe1/catviews/iphgrf_lfcnwe1_tcbreg.td \
-		./iphgrf_asdfuirfv1_lib/iphgrf_saefiweqnx1/catviews/iphgrf_saefiweqnx1_tcbreg.td \
-		./lxmer_lib/lxmer_asdfesavgyt/catviews/lxmer_asdfesavgyt_testshell_internal_tcb.td \
-		./lxmer_lib/lxmer_asdfesavgyt/catviews/lxmer_asdfesavgyt_testshell_tcb.td \
-		./ltthf_lib/ltthf_asdopefsd_asdcsda_shell/catviews/ltthf_asdopefsd_asdcsda_shell_internal_tcb.td \
-		./asfafe_sara_adfex_testmuxn1_lib/asfafe_sara_adfex_testmuxn1/catviews/asfafe_sara_adfex_testmuxn1_internal_tcb.td \
+		$env(PROJECT_WORK)/data/hrxc_ic_lib/hrxc_ic_rcgu/catviews/hrxc_ic_rcgu_tcbreg.td \
+		$env(PROJECT_WORK)/data/hrxc_ic_lib/hrxc_ic_core/catviews/hrxc_ic_core_test_off_tcbreg.td \
+		$env(PROJECT_WORK)/data/hrxc_ic_lib/hrxc_ic_core/catviews/hrxc_ic_core_test_on_tcbreg.td \
+		$env(PROJECT_WORK)/data/iphgrf_aseifbfn1_lib/iphgrf_aseifbfn1/catviews/iphgrf_aseifbfn1_tcbreg.td \
+		$env(PROJECT_WORK)/data/iphgrf_asdafevsdd1_lib/iphgrf_asdafevsdd1/catviews/iphgrf_asdafevsdd1_tcbreg.td \
+		$env(PROJECT_WORK)/data/iphgrf_hrxc4_lib/iphgrf_hrxc4/catviews/iphgrf_hrxc4_tcbreg.td \
+		$env(PROJECT_WORK)/data/iphgrf_asdfuirfv1_lib/iphgrf_lfcnwe1/catviews/iphgrf_lfcnwe1_tcbreg.td \
+		$env(PROJECT_WORK)/data/iphgrf_asdfuirfv1_lib/iphgrf_saefiweqnx1/catviews/iphgrf_saefiweqnx1_tcbreg.td \
+		$env(PROJECT_WORK)/data/lxmer_lib/lxmer_asdfesavgyt/catviews/lxmer_asdfesavgyt_testshell_internal_tcb.td \
+		$env(PROJECT_WORK)/data/lxmer_lib/lxmer_asdfesavgyt/catviews/lxmer_asdfesavgyt_testshell_tcb.td \
+		$env(PROJECT_WORK)/data/ltthf_lib/ltthf_asdopefsd_asdcsda_shell/catviews/ltthf_asdopefsd_asdcsda_shell_internal_tcb.td \
+		$env(PROJECT_WORK)/data/asfafe_sara_adfex_testmuxn1_lib/asfafe_sara_adfex_testmuxn1/catviews/asfafe_sara_adfex_testmuxn1_internal_tcb.td \
 	"
 
 
