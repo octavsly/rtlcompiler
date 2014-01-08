@@ -69,8 +69,8 @@ variable read_ctl 		{
 				}
 
 # TCB's and TPR's
-set TCBs(module) [find /designs -subdesign *tcb*]
-set TPRs(module) [find /designs -subdesign *_tpr*]
+set TCBs(module) "" ; # will be found automatically after elaborate
+set TPRs(module) "" ; # will be found automatically after elaborate
 
 set TCBs(td)	"
 		./hrxc_ic_lib/hrxc_ic_rcgu/catviews/hrxc_ic_rcgu_tcbreg.td \
@@ -87,9 +87,7 @@ set TCBs(td)	"
 		./asfafe_sara_adfex_testmuxn1_lib/asfafe_sara_adfex_testmuxn1/catviews/asfafe_sara_adfex_testmuxn1_internal_tcb.td \
 	"
 
-# Scan chains inputs/outputs
-variable scan_inputs	[find <instance> -maxdepth 2 -pin si*]
-variable scan_outputs	[find <instance> -maxdepth 2 -pin so*]
+
 
 # Test data files of TCB's
 variable constraints_from_tcbs	{
@@ -130,6 +128,10 @@ variable test_point_insertion {
 			-test_clock_pin I0/u0_hrxc_ic_core_test/ccb_testshell_ccb/func_clk
 		}
 
+
+# Scan chains inputs/outputs
+variable scan_inputs	I0/u0_hrxc_ic_core_test/si*
+variable scan_outputs	I0/u0_hrxc_ic_core_test/so*
 
 # Scan chain insertion
 set scan_chains_insertion {
