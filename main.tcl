@@ -22,7 +22,7 @@ package require octopus   0.1
 set EXEC_PATH "" ; set DATA_PATH "" ; set CRT_LIB "" ; set CRT_CELL "" ; regexp {(.*/data/)([^/]+_lib)/([^/]+)/.*} [exec pwd] EXEC_PATH DATA_PATH CRT_LIB CRT_CELL
 ::octopus::add_option --name "--maturity-level" --valid-values "pre-alpha alpha beta release-candidate final" --help-text "Maturity level of the design."
 ::octopus::add_option --name "--design" --variable-name "DESIGN" --default "$CRT_CELL" --help-text "Top level design for which synthesis will be performed."
-::octopus::add_option --name "--reports-path" --variable-name "_REPORTS_PATH" --default "${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/rtlcompiler/rpt" --help-text "Directory holding the reports."
+::octopus::add_option --name "--reports-path" --variable-name "_REPORTS_PATH" --default "[exec pwd]/rpt" --help-text "Directory holding the reports."
 ::octopus::add_option --name "--netlist-path" --variable-name "_NETLIST_PATH" --default "${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/NETLIST" --help-text "Directory holding the netlist."
 ::octopus::add_option --name "--cpf" --variable-name "_CPF_FILE" --default "${DATA_PATH}/${CRT_LIB}/${CRT_CELL}/POWER/${CRT_CELL}.cpf" --help-text "CPF file location."
 ::octopus::add_option --name "--clean-rpt" --type "boolean" --default "false" --help-text "Clean all reports before the run. Otherwise reports are cleaned one by one."
