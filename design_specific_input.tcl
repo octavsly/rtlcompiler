@@ -31,7 +31,7 @@ variable capture_timing_mode		PM_scantest_dft_On
 # CTL files containing the scan-chains
 variable read_ctl 		{
 				::octopusRC::read_dft_abstract_model\
-					--assume-connected-shift-enable\
+					-assume_connected_shift_enable\
 					--ctl \
 						$env(PROJECT_WORK)/data/hrxc_hrxc1_lib/hrxc_hrxc1/catviews/hrxc_hrxc1_ana_tpr.ctl \
 						$env(PROJECT_WORK)/data/hrxc_hrxc1_lib/hrxc_hrxc1/catviews/hrxc_hrxc1_ana_tpr.ctl \
