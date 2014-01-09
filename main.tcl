@@ -56,7 +56,7 @@ include house_keeping.tcl
 #Library (including dont_use) and ple setup"
 read_cpf -library $_CPF_FILE
 
-include dont_use_list.tcl
+include dont_use.tcl
 
 include ple_setup.tcl
 ################################################################################
