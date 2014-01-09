@@ -34,7 +34,6 @@ variable read_ctl 		{
 					-assume_connected_shift_enable\
 					--ctl \
 						$env(PROJECT_WORK)/data/hrxc_hrxc1_lib/hrxc_hrxc1/catviews/hrxc_hrxc1_ana_tpr.ctl \
-						$env(PROJECT_WORK)/data/hrxc_hrxc1_lib/hrxc_hrxc1/catviews/hrxc_hrxc1_ana_tpr.ctl \
 						$env(PROJECT_WORK)/data/hrxc_hrxc2_lib/hrxc_hrxc2/catviews/hrxc_hrxc2_ana_tpr.ctl \
 						$env(PROJECT_WORK)/data/hrxc_hrxc2_lib/hrxc_hrxc2/catviews/hrxc_hrxc2_trim_tpr.ctl \
 						$env(PROJECT_WORK)/data/hrxc_hrxc3_lib/hrxc_hrxc3/catviews/hrxc_hrxc3_ana_tpr.ctl \
