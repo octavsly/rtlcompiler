@@ -22,7 +22,7 @@ define_dft shift_enable -name se -default		-active high $diehardus::scan_enable_
 define_dft shift_enable -name tcb_clock_active_se	-active high $diehardus::scan_enable_clock_gate
 
 # Might be required for clock tracing. It solve all the other S type of TCB's signals.
-define_dft shift_enable -name tcb_tc                    -active high [get_attribute instances [find -subdesign $JTAG_TAP]]/tcb_tc
+define_dft shift_enable -name tcb_tc                    -active high [get_attribute instances [find -subdesign $diehardus::JTAG_TAP]]/tcb_tc
 
 # Take DfT signals from SDC files
 octopusRC::define_dft_test_signals \

@@ -3,7 +3,7 @@ set_attribute	lp_multi_vt_optimization_effort		medium
 set_attribute	lp_power_optimization_weight		0.3	${DESIGN}
 
 # pre-alpha is know to have plenty of missing blocks, which should not be optimized away
-if { "[get_attribute octopusRC_design_maturity_level]" == "pre-alpha" } { set_attribute boundary_opto false [find /des* -subdesign *] }
+if { "[get_attribute octopusRC_design_maturity_level /]" == "pre-alpha" } { set_attribute boundary_opto false [find /des* -subdesign *] }
 
 #set preserve to sparecells
 #set_attribute preserve true [filter -invert flop "true" [find / -instance iphgrf_asdof1_1/u_iphgrf_asdof1_dig/u0_iphgrf_asdof1_dig_pso/u0_iphgrf_sparelogic/*]]

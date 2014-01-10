@@ -11,5 +11,5 @@ set_attribute lp_clock_gating_exclude true $diehardus::TPRs(module)
 
 set_attribute lp_clock_gating_test_signal /designs/$DESIGN/dft/test_signals/[file tail $diehardus::scan_enable_clock_gate]  $DESIGN
 
-display_message tip "If stuckat FC is low ==> exclude clock gating from switchable domains"
+::octopus::display_message tip "If stuckat FC is low ==> exclude clock gating from switchable domains"
 #set_attribute lp_clock_gating_exclude true [filter power_domain /designs/$DESIGN/power/power_domains/<PD_dft_PSO> [find / -inst *]]
